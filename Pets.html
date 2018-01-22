@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<script src="Scripts/angular.js"></script>
+<script>
+   
+    function BindingCode($scope, $http) {
+
+        $scope.GetDetails = function () {          
+                
+                $http.post("http://localhost:2169/api/Pets").
+                    success(function (data) {
+                     
+                        $scope.PetsWithMales = data.MaleLst;
+                        $scope.PetsWithFemales = data.FemaleLst;
+                });
+            
+        }
+    }
+    
+    var myApp = angular.module("myApp", []);
+    myApp.controller("BindingCode", BindingCode);
+    
+</script>
+<body>
+    <div ng-app="myApp">  
+        <div id="PetsScreen" ng-controller="BindingCode" ng-init="GetDetails()" >
+            <!--<input type="button" ng-click="Submit()" name="name" value="Submit" /><br />-->
+            <table>
+                <tr>
+                    <td style="font-size:x-large; width:150px; text-align:left;">Male</td>
+                </tr>
+                <tr ng-repeat="pets in PetsWithMales" style="width:150px; text-align:center;">
+                    <td style="font-style:italic">&#9642; {{::pets}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size:x-large; width:150px; text-align:left;">Female</td>
+                </tr>
+                <tr ng-repeat="pets in PetsWithFemales" style="width:150px; text-align:center;">
+                    <td style="font-style:italic">&#9642; {{::pets}}</td>
+                </tr>
+            </table>
+        </div><br />
+    </div>   
+</body>
+</html>
